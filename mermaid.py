@@ -1,12 +1,12 @@
 from flask import Flask, render_template, request, jsonify
 import openai
-import logging
+# import logging
 import os  # Import os to use environment variables
 
 app = Flask(__name__)
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+# logging.basicConfig(level=logging.INFO)
 
 @app.route('/')
 def home():
@@ -18,7 +18,7 @@ def generate_mermaid():
     data = request.json
     if not data or 'description' not in data or 'apiKey' not in data:  
         missing_params = [param for param in ['description', 'apiKey'] if param not in data]
-        logging.error(f"Missing required parameters: {', '.join(missing_params)}")
+        # logging.error(f"Missing required parameters: {', '.join(missing_params)}")
         print("ERROR BROKEN")
         return jsonify({'error': f"Missing required parameters: {', '.join(missing_params)}"}), 400
     
@@ -45,7 +45,7 @@ def generate_mermaid():
         # print("mermaid_syntax: ", mermaid_syntax)
         return jsonify({'mermaidSyntax': mermaid_syntax})
     except Exception as e:
-        logging.error(f"Error: {e}")
+        # logging.error(f"Error: {e}")
         return jsonify({'error': 'Failed to generate Mermaid syntax', 'details': str(e)}), 500
 
 if __name__ == '__main__':
