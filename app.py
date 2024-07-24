@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import openai
 # import logging
-import os  # Import os to use environment variables
+import os 
 
 app = Flask(__name__)
 
@@ -25,19 +25,12 @@ def generate_mermaid():
     description = data['description']
     openai.api_key = data['apiKey']
 
-    print("descriptisssssson: ", description)
-    # It's recommended to use environment variables for API keys
-    # api_key = os.getenv('OPENAI_API_KEY')
-    # if not api_key:
-    #     logging.error("OpenAI API key is not set in environment variables.")
-    #     return jsonify({'error': 'OpenAI API key is not configured on the server.'}), 500
 
     try:
         prompt = f"Generate Mermaid syntax for a flowchart based on the following description: {description}. Only return mermaid code starting from graph TD. DO not include mermaid in response. For example, if the description is 'A flowchart to show the process of a user signing up for a website', the response should be"
         response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[{"role": "user", "content": prompt}],
-            # api_key=api_key
         )
         mermaid_syntax = response.choices[0].message.content.strip()
         # mermaid_syntax = response.choices[0].message['content']
